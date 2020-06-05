@@ -22,9 +22,17 @@ allprojects {
         appName = "bob-goes-to-the-beach"
         gdxVersion = '1.9.10'
         roboVMVersion = '2.3.7'
-        box2DLightsVersion = '1.4'
+        box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.0'
-        aiVersion = '1.8.0'
+        aiVersion = '1.8.2'
+
+        slf4j = '1.7.26'
+        logback = '1.2.3'
+        lombok = '1.18.12'
+
+        pieMenuVersion = '4.2.0'
+        shapedrawer = '2.3.0'
+        okHttp = '3.12.1'
     }
 
     repositories {
@@ -34,6 +42,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -46,7 +55,11 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        
+
+        implementation "ch.qos.logback:logback-classic:$logback"
+
+        compileOnly "org.projectlombok:lombok:$lombok"
+        annotationProcessor "org.projectlombok:lombok:$lombok"
     }
 }
 
@@ -59,6 +72,15 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        
+
+        api "org.slf4j:slf4j-api:$slf4j"
+
+        compileOnly "org.projectlombok:lombok:$lombok"
+        annotationProcessor "org.projectlombok:lombok:$lombok"
+
+        implementation "space.earlygrey:shapedrawer:$shapedrawer"
+        api "com.github.payne911:PieMenu:$pieMenuVersion"
+
+        api "com.squareup.okhttp3:okhttp:$okHttp"
     }
 }
