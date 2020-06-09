@@ -19,7 +19,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "bob-goes-to-the-beach"
+        appName = "marvelous-bob"
         gdxVersion = '1.9.10'
         roboVMVersion = '2.3.7'
         box2DLightsVersion = '1.5'
@@ -32,7 +32,6 @@ allprojects {
 
         pieMenuVersion = '4.2.0'
         shapedrawer = '2.3.0'
-        okHttp = '3.12.1'
     }
 
     repositories {
@@ -81,6 +80,6 @@ project(":core") {
         implementation "space.earlygrey:shapedrawer:$shapedrawer"
         api "com.github.payne911:PieMenu:$pieMenuVersion"
 
-        api "com.squareup.okhttp3:okhttp:$okHttp"
+        implementation 'com.github.EsotericSoftware:kryonet:03a135e203'
     }
 }

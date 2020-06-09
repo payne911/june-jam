@@ -1,8 +1,8 @@
-package com.centpourcent.bob.desktop;
+package com.marvelousbob.client.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.centpourcent.bob.BobGoesToTheBeach;
+import com.marvelousbob.client.BobGoesToTheBeach;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

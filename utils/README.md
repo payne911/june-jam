@@ -1,0 +1,1 @@
+Here we put our SSH keys. The ``.gitignore`` file ensures they don't get pushed (using the extension, not the path).

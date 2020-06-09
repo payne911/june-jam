@@ -1,4 +1,4 @@
-package com.centpourcent.bob;
+package com.marvelousbob.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
