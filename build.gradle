@@ -27,8 +27,9 @@ allprojects {
         aiVersion = '1.8.2'
 
         slf4j = '1.7.26'
-        logback = '1.2.3'
+        logback = '1.2.3' // todo: use minLog instead
         lombok = '1.18.12'
+        daggerVersion = '2.27' // for DI
 
         pieMenuVersion = '4.2.0'
         shapedrawer = '2.3.0'
@@ -81,5 +82,8 @@ project(":core") {
         api "com.github.payne911:PieMenu:$pieMenuVersion"
 
         implementation 'com.github.EsotericSoftware:kryonet:03a135e203'
+
+        api "com.google.dagger:dagger:$daggerVersion"
+        annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     }
 }

@@ -7,6 +7,9 @@ import com.marvelousbob.client.MarvelousBob;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new MarvelousBob(), config);
+
+		MarvelousBob core = new MarvelousBob();
+		core.setSplashWorker(new DesktopSplashWorker());
+		new LwjglApplication(core, config);
 	}
 }

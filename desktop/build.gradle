@@ -1,7 +1,18 @@
 plugins { id 'org.beryx.runtime' version '1.8.4' }
 apply plugin: "java"
+apply plugin: 'idea' // to make IDEA see build/generated/source/apt/main as source folder
 
 sourceCompatibility = 14 // run desktop -> Tasks -> build -> jpackageImage for the ".exe"
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+}
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec) {
+    jvmArgs += '--enable-preview'
+}
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../core/assets"]
 
@@ -28,7 +39,7 @@ task debug(dependsOn: classes, type: JavaExec) {
 
 task dist(type: Jar) {
     manifest {
-        attributes 'Main-Class': project.mainClassName
+        attributes ('Main-Class': project.mainClassName, 'SplashScreen-Image' : 'splash_screen.png')
     }
     from {
         configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -57,7 +68,6 @@ runtime {
     jpackage {
         //jpackageHome = '/usr/lib/jvm/open-jdk'
         mainJar = dist.archiveFileName.get()
-        println("$project.ext.assetsDir/icons/icon.icns")
         if (osName.contains('windows')) {
             imageOptions = ["--icon", file("$assetsDir/icons/icon.ico")]
         } else if (osName.contains('linux')) {
