@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class BobGoesToTheBeach extends ApplicationAdapter {
+public class MarvelousBob extends ApplicationAdapter {
+
 	SpriteBatch batch;
 	Texture img;
-	
+
 	@Override
-	public void create () {
+	public void create() {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
