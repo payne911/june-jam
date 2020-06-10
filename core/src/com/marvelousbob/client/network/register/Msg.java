@@ -1,4 +1,4 @@
-package com.marvelousbob.client.network.bound;
+package com.marvelousbob.client.network.register;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

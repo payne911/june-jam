@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.marvelousbob.client.network.MyClient;
-import com.marvelousbob.client.network.bound.Msg;
-import com.marvelousbob.client.network.bound.Ping;
+import com.marvelousbob.client.network.register.Msg;
+import com.marvelousbob.client.network.register.Ping;
 import com.marvelousbob.client.splashScreen.ISplashWorker;
 import lombok.Setter;
 
