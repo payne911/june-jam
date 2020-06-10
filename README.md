@@ -27,3 +27,7 @@ The boolean value of ``mbs_isRemote`` depends on whether you want to communicate
 Trigger the ``desktop:jpackageImage`` task: it will bundle Java 14 with the application, run JLink to optimize, and create an executable for the platform you have ran the task with (for example, from a Windows computer you'll get a `.exe` file).
 
 The relevant generate files will then be inside ``desktop/build/jpackage/desktop``.
+
+# Assets
+
+Most of them come from [Kenney](https://kenney.nl/assets?t=platformer), licensed ``CC0 1.0 Universal)``. Thank you so much!
