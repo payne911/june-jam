@@ -13,7 +13,7 @@ import lombok.SneakyThrows;
 
 public class MyClient {
 
-    public static final String EC2_HOST = "52.60.181.140";
+    public static final String REMOTE_SERVER = "52.60.181.140";
     public static final int PORT = 80;
     public static final int TIMEOUT = 15000;
 
@@ -37,7 +37,7 @@ public class MyClient {
         client.getKryo().register(Msg.class);
         client.getKryo().register(Ping.class);
         this.addr = isRemoteServer
-                ? InetAddress.getByName(EC2_HOST)
+                ? InetAddress.getByName(REMOTE_SERVER)
                 : InetAddress.getLocalHost();
         this.latencyReport = new IncrementalAverage();
     }
