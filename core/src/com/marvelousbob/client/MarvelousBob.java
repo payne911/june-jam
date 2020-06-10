@@ -18,12 +18,14 @@ import com.marvelousbob.client.network.MyClient;
 import com.marvelousbob.client.network.bound.Msg;
 import com.marvelousbob.client.network.bound.Ping;
 import com.marvelousbob.client.splashScreen.ISplashWorker;
+import lombok.Setter;
+
 
 public class MarvelousBob extends ApplicationAdapter {
 
-    /* Loading. */
+    /* Splash Screen. */
+    @Setter
     private ISplashWorker splashWorker;
-    private boolean finishedLoading = false;
 
     /* Display. */
     public SpriteBatch batch;
@@ -33,50 +35,45 @@ public class MarvelousBob extends ApplicationAdapter {
     public Stage stage;
 
     /* Client. */
-    private MyClient client =
-            new MyClient(Boolean.parseBoolean(System.getenv("mbs_isRemote")));
+    private MyClient client;
 
     @Override
     public void create() {
-        System.out.println("\nisRemote? " + Boolean.parseBoolean(System.getenv("mbs_isRemote")));
-        splashWorker.closeSplashScreen();
-        client.connect();
+        removeSplashScreen();
+        createClient();
 
         batch = new SpriteBatch();
+        initializeScene2d();
+    }
 
-        System.out.println("client create");
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-
+    private void initializeScene2d() {
         /* https://github.com/raeleus/skin-composer/wiki/From-the-Ground-Up-00:-Scene2D-Primer */
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        font = new BitmapFont();
         root = new Table(skin);
         root.setDebug(true);
         root.setFillParent(true);
         stage.addActor(root);
         root.defaults().fillX().pad(20);
 
-        Table pingComponent = new Table(skin);
-        TextArea textArea = new TextArea("placeholder", skin);
-        pingComponent.add(textArea).width(300).height(90);
-        Button btn = new TextButton("  > PING <  ", skin);
-        btn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                btn.setDisabled(true);
-                for (int i = 0; i < 15000; i++) {
-                    client.getClient().sendTCP(new Ping(System.currentTimeMillis()));
-                    textArea.setText(client.getLatencyReport().toString());
-                }
-                btn.setDisabled(false);
-            }
-        });
-        pingComponent.add(btn);
-        root.add(pingComponent);
-
+        pingComponent();
         root.row(); // start next row
+        msgComponent();
+    }
+
+    private void createClient() {
+        System.out.println("\nisRemote? " + Boolean.parseBoolean(System.getenv("mbs_isRemote")));
+        this.client = new MyClient(Boolean.parseBoolean(System.getenv("mbs_isRemote")));
+        client.connect();
+    }
+
+    private void removeSplashScreen() {
+        splashWorker.closeSplashScreen();
+    }
+
+    private void msgComponent() {
         Table msgComponent = new Table(skin);
         Button btn2 = new TextButton("  > MSG <  ", skin);
         btn2.addListener(new ChangeListener() {
@@ -91,10 +88,32 @@ public class MarvelousBob extends ApplicationAdapter {
         root.add(msgComponent);
     }
 
+    private void pingComponent() {
+        Table pingComponent = new Table(skin);
+        TextArea textArea = new TextArea("placeholder", skin);
+        pingComponent.add(textArea).width(300).height(90);
+        Button btn = new TextButton("  > PING <  ", skin);
+        btn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                btn.setDisabled(true);
+                for (int i = 0; i < 50; i++) {
+                    client.getClient().sendTCP(new Ping(System.currentTimeMillis()));
+                }
+                textArea.setText(client.getLatencyReport()
+                        .toString()); // todo: should be in a callback in the client?
+                btn.setDisabled(false);
+            }
+        });
+        pingComponent.add(btn);
+        root.add(pingComponent);
+    }
+
     @Override
     public void render() {
         Gdx.gl.glClearColor(.2f, .2f, .2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 //        batch.begin();
 //        batch.draw(img, 0, 0);
 //        batch.end();
@@ -114,14 +133,5 @@ public class MarvelousBob extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         stage.dispose();
-    }
-
-
-    public ISplashWorker getSplashWorker() {
-        return splashWorker;
-    }
-
-    public void setSplashWorker(ISplashWorker splashWorker) {
-        this.splashWorker = splashWorker;
     }
 }
