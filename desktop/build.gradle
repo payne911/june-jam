@@ -49,6 +49,17 @@ task dist(type: Jar) {
     destinationDirectory = file("$buildDir/lib")
 }
 
+// todo: trying to add splash in jpackage (https://github.com/beryx/badass-jlink-plugin/issues/97)
+tasks.jpackageImage.doLast {
+    copy {
+        from "$assetsDir"
+        include "splash_screen.png"
+        into "build/jpackage/$project.name/app"
+    }
+}
+//jpackage {
+//    jvmArgs = ["-splash:$assetsDir/splash_screen.png"]
+//}
 jpackageImage.dependsOn dist
 dist.dependsOn classes
 
