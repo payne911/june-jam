@@ -4,16 +4,17 @@ import lombok.Getter;
 
 public class IncrementalAverage {
 
-    private double current;
+    @Getter
+    private double average;
     private int counter;
 
     @Getter
     private long min, max;
 
     public IncrementalAverage(int current) {
-        this.current = current;
-        this.counter = 1;
-        this.min = 0;
+        this.average = current;
+        this.counter = 0;
+        this.min = Long.MAX_VALUE;
         this.max = 0;
     }
 
@@ -21,14 +22,12 @@ public class IncrementalAverage {
         this(0);
     }
 
-    public double getAverage() {
-        return current;
-    }
-
-    public void addToRunningAverage(long num) {
-        evaluateMin(num);
-        evaluateMax(num);
-        current = current + (num - current) / (double) counter++;
+    public void addToRunningAverage(long sentMsgTimestamp) {
+        long delta = System.currentTimeMillis() - sentMsgTimestamp;
+        evaluateMin(delta);
+        evaluateMax(delta);
+        average = average + (delta - average) / (double) ++counter;
+        System.out.println(counter + " : " + delta);
     }
 
     public void evaluateMin(long num) {
@@ -41,9 +40,10 @@ public class IncrementalAverage {
 
     @Override
     public String toString() {
-        return "min: " + min
-                + "\nmax: " + max
-                + "\naverage: " + current
-                + "\ncounter: " + counter;
+        return ("""
+                min: %d ms
+                max: %d ms
+                average: %.3f ms
+                counter: %d""").formatted(min, max, average, counter);
     }
 }
