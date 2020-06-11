@@ -102,6 +102,8 @@ public class MarvelousBob extends ApplicationAdapter {
 //        batch.draw(img, 0, 0);
 //        batch.end();
 
+
+
         /* Drawing the UI over the game. */
         stage.act();
         stage.draw();
@@ -183,9 +185,7 @@ public class MarvelousBob extends ApplicationAdapter {
                 int size = graphData.size();
                 graphDrawerDrawable.setDomainEnd(size + .1f);
                 graphDrawerDrawable.setPlotEnd(Math.max(1.1f, size - 1f));
-                float point = size > index ? graphData.get(index) : 0;
-                log.info("point: " + point);
-                return point;
+                return size > index ? graphData.get(index) : 0;
             }
         };
         graphDrawerDrawable.setInterpolation(customFunc);
