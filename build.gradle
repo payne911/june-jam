@@ -1,6 +1,4 @@
 buildscript {
-    
-
     repositories {
         mavenLocal()
         mavenCentral()
@@ -12,6 +10,18 @@ buildscript {
     dependencies {
         
 
+    }
+}
+
+// to force download of sources and JavaDoc
+plugins {
+    id 'java'
+    id 'idea'
+}
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
     }
 }
 
@@ -27,7 +37,7 @@ allprojects {
         aiVersion = '1.8.2'
 
         slf4j = '1.7.26'
-        logback = '1.2.3' // todo: use minLog instead
+        logback = '1.2.3'
         lombok = '1.18.12'
         daggerVersion = '2.27' // for DI
 
